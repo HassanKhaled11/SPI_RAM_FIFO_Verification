@@ -1,0 +1,43 @@
+module spi_ram(din,rx_valid,tx_valid,dout,clk,rst_n);
+input [9:0] din;
+input rx_valid;
+input clk,rst_n;
+output reg tx_valid;
+output reg[7:0] dout;
+
+
+`pragma protect begin_protected
+`pragma protect version = 1
+`pragma protect encrypt_agent = "QuestaSim" , encrypt_agent_info = "QA Baseline: 2022_daily_220828 - 5400093"
+`pragma protect key_keyowner = "Siemens" , key_keyname = "SIEMENS-VERIF-SIM-RSA-1"
+`pragma protect key_method = "rsa"
+`pragma protect encoding = ( enctype = "base64" , line_length = 64 , bytes = 256 )
+`pragma protect key_block
+DcXluXs28npAdl6oEUQsyv1a3loGJuT2O0QmebK/naWQOkJrB6lhqRRRym275jI0
+/HLryn95WOAyHFVoXC35C9PPvOkBB6WaaUoRcWCMrv39XOh72nP7KptL5HLnw4UE
+a1gil3+0gj5lH5/1gBFxiAamSeCm3nhYtS0bRdoihQB5qn3UXFcu1l/jVS5yZsRu
+Qfq23khBWpyZAsev+e4iuaRTptJRRR6aLtPFN/mCJoJV+Ha7EO/QAI86SsEyN5nq
+NtfmyF4C2t4qXlXkw5YkXQEX5WQep+S6u0xmpDDqtAWIWfZOsSZp4bWn7xH0j41I
+9n2+o2v5W5HONp2bFnk+uw==
+`pragma protect data_method = "aes128-cbc"
+`pragma protect encoding = ( enctype = "base64" , line_length = 64 , bytes = 528 )
+`pragma protect data_block
+B7oWRnuw7cc5kfJDO3xhRKG7RYce7NzQzmF8y3DRM4E7moKaNhbHM/q+a8YNE/aH
+njL6mnJoZboMBBPzZonBGttQRR8pLLahd3vuvBJ7TYaE+hcbZ2A2FOjoCmDS7N3l
+YMvpHKJGNS4oBhiLc91FfTLx2ULcxGdDwNgxuVzN4bWKGAdposkYiw8JkY7KYX+q
+Oit8VXE5yeuHg74Z4SSDymscVJ+GrJpUY6KWgfu7TE0G4WYPtbtMuCbDD1MtXbjN
+o/cr3RbK8YpTH6bTUp4pHM7chsxi0b1TIQfoLxg2OBzbJAAT6jlowuUyMwUxQwmt
+oWYag0fCVwVjlwSF6xkICvqFUF11RVXWpOcxmPE2zk+qgn5MoqlOhV7+m/eXFFz4
++zwGega66Q5CXVP11ZTLQZ+enpZb8owF/4eozKWlhLNCG+vass06V1Pm6FSmIHRW
+C/LLcsjgNfs3UZMOqGGSno9QhbOKcCFFNrn+O4M/L6tq+4+kimJTuUeRmvkMLLav
+rf9fZfnOBkbuIgbbTD5i/CXen4mDQKY8uG3vNyrvZHbjiYHs8358lPx6bjUXSHcy
+EzCNWO6a7fGzbOPoXmpEhtuwo9OzJ06rQCuQy9hboHII2Cjawqp+0u+PogglfXdw
+TDldy8T1235LyCGrF8fX152+03yQFFKDsc/BbHilhME4dw0XPrQpfXqDv50xzXdn
+`pragma protect end_protected
+
+
+endmodule
+
+
+
+
