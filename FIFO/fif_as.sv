@@ -46,4 +46,15 @@ module fifo_sva(FIFO_if.asert asrt);
 		@(posedge asrt.clk) ($fell(asrt.full) && asrt.rd_en)|=> asrt.almostfull[->2];
 	endproperty
 	amostFull : assert property(afull);
+
+
+	/////////////////// write acknowledge ////////////////////
+	property wack_1 ;
+		@(posedge asrt.clk) if(asrt.rst_n) $rose(asrt.wr_en) |=> $rose(asrt.wr_ack);
+	endproperty
+	wrAck_chk1 : assert property(wack_1);
+	property wack ;
+		@(posedge asrt.clk) $rose(asrt.wr_en) |->##[1:2] (asrt.wr_ack);
+	endproperty
+	wrAck_chk : assert property(wack);
 endmodule 
