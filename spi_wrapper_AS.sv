@@ -9,6 +9,16 @@ property rst_prop;
 endproperty
 
 assert property(rst_prop);
-cover property (rst_prop) $display("right");
+cover property (rst_prop);
+
+
+
+property ssn_prop;
+@(posedge clk) $fell(SS_n) |=> (!SS_n && MOSI)[*2] |=> !SS_n[*9:10] ##1 $rose(SS_n);
+endproperty
+
+assert property(ssn_prop);
+cover property(ssn_prop);
+
 
 endmodule
