@@ -20,5 +20,8 @@ sim:/top/fif/wr_ack
 
 add wave /top/f_if/asrt/full_chk /top/f_if/asrt/over_chk /top/f_if/asrt/empty_chk /top/f_if/asrt/uner_chk /top/f_if/asrt/overLong /top/f_if/asrt/amostEmpty /top/f_if/asrt/amostFull /top/f_if/asrt/wrAck_chk1 /top/f_if/asrt/wrAck_chk
 
-coverage save adder_tb.ucdb -onexit
+coverage save top.ucdb -onexit
 run -all
+
+# to extract report run the following command
+# vcover report top.ucdb -details -all -annotate 
