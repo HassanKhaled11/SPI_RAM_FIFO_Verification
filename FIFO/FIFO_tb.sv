@@ -119,11 +119,7 @@ class fiffo ;
  		fif = new();
  	endfunction 
 endclass 
-task check_2_q(input logic [15:0] data_out,logic [15:0] data_exp);
-	if(data_out != data_exp)
-		$display("Error!!");
-	else $display("Success");
-endtask 
+
 module FIFO_tb (FIFO_if.TEST tb_if);	
 	logic [15:0] fif_q [$:4];//[15:0]
 	bit [15:0] data_oout;
@@ -138,7 +134,17 @@ module FIFO_tb (FIFO_if.TEST tb_if);
 			tb_if.wr_en = fifoo.wr_en;
 			tb_if.rd_en = fifoo.rd_en;
 			tb_if.rst_n = fifoo.rst_n;
-
+			if(tb_if.wr_en && tb_if.rst_n) begin 
+				fif_q.push_back(tb_if.data_in);
+			end
+			if(!tb_if.rst_n)
+				fif_q.delete();
+			if(tb_if.overflow && !tb_if.wr_en)
+				fif_q.pop_back();// will give a warning as pop func. return the poped item  <3laa>
+			if(tb_if.rd_en && tb_if.rst_n) begin
+				tb_if.data_out_expected = fif_q.pop_front();
+				//check_2_q(tb_if.data_out , tb_if.data_out_expected);
+			end
 			@(negedge tb_if.clk);
 
 			fifoo.wr_ack = tb_if.wr_ack;
@@ -147,13 +153,10 @@ module FIFO_tb (FIFO_if.TEST tb_if);
 			fifoo.almostfull = tb_if.almostfull;
 			fifoo.almostempty = tb_if.almostempty;
 			fifoo.overflow = tb_if.overflow;
-			fifoo.underflow = tb_if.underflow;
-			if(tb_if.wr_en) begin 
-				fif_q.push_back(tb_if.data_in);
-			end
+			fifoo.underflow = tb_if.underflow;			
+			
 			if(tb_if.rd_en) begin
-				tb_if.data_out_expected = fif_q.pop_front();
-				//check_2_q(tb_if.data_out , tb_if.data_out_expected);
+				check_2_q(tb_if.data_out , tb_if.data_out_expected);
 			end
 		end
 		
@@ -162,5 +165,15 @@ module FIFO_tb (FIFO_if.TEST tb_if);
 
 	always@(posedge tb_if.clk)
 		fifoo.fif.sample();
+
+
+
+
+task check_2_q(input logic [15:0] data_out,logic [15:0] data_exp);
+	if(data_out == data_exp && !tb_if.wr_en)
+		$display("Success!!");
+	else $display("Error!!, rest=%b , overflow=%b",tb_if.rst_n,tb_if.overflow);
+endtask 
+
 
 endmodule 
