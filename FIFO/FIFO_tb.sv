@@ -5,18 +5,13 @@ to keep towards
 	write => almost full (cover bins) => full (cover bins) => overflow (cover bins)
 then , read => almost empty(cover bins) => empty (cover bins) => underflow (cover)	
 FIFO states :
-
 (1)empty with read enable [underflow]
 (2)almost empty
 (3)just empty
 (4)full with write enable [overflow]
 (5)almost full
 (6)just full
-
 ////////////////////////////    Assertions ////////////////////////////////////////
-
-
-
 */
 
 class fiffo ;
@@ -48,6 +43,7 @@ class fiffo ;
 		 bins full_1 = {1};
 		 bins fullz_1 = (0=>1);
 		 bins full1_z = (1 => 0);
+
 		}
 		afull : coverpoint almostfull{
 				bins a_full1 = {1};
@@ -58,6 +54,11 @@ class fiffo ;
 		full: cross wr,f{
 		 bins wr_full = binsof(wr.wr_1) && binsof(f.fullz_1);
 		 bins overflow = binsof(wr.wr_1) && binsof(f.full_1);
+		 ignore_bins  non_imp5 = binsof(wr.wr1_z) && binsof(f.fullz_1);
+		 ignore_bins  non_imp6 = binsof(wr.wr1_z) && binsof(f.full1_z);
+		 ignore_bins  non_imp7 = binsof(wr.wrz_1) && binsof(f.fullz_1);
+		 ignore_bins  non_imp8 = binsof(wr.wrz_1) && binsof(f.full_1);
+		 ignore_bins  non_imp9 = binsof(wr.wr_z) && binsof(f.fullz_1);
 		}
 		e:coverpoint empty{
 		 ignore_bins empty_z ={0};
@@ -81,8 +82,18 @@ class fiffo ;
 		 bins under_1 = {1};
 		 bins underz_1 = (1=>0);
 		} 
+		/*
+		 bins rd_z ={0};
+		 bins rd_1 = {1};
+		 bins rdz_1 = (0=>1);
+		 bins rd1_z = (1 => 0);*/
 		empty: cross e,rd{
-		bins rd_emp = binsof (rd.rd_1) && binsof(e.emptyz_1);
+		ignore_bins rd_emp = binsof (rd.rd_1) && binsof(e.emptyz_1);
+		ignore_bins non_imp1 = binsof(rd.rd_z);
+		ignore_bins non_imp2 = binsof(rd.rd1_z);
+		ignore_bins non_imp3 = binsof(rd.rdz_1);
+		ignore_bins  non_imp4 = binsof(rd.rd_1) && binsof(e.empty1_z);
+
 		bins underflow = binsof(rd.rd_1) && binsof(e.empty_1);
 		}
 
@@ -127,7 +138,7 @@ module FIFO_tb (FIFO_if.TEST tb_if);
 
 	initial begin
 		fifoo.empty = tb_if.empty;
-		repeat(100)begin 
+		repeat(200)begin 
 			//fifoo.size = fif_q.size();
 			assert(fifoo.randomize());
 			tb_if.data_in = fifoo.data_in;
@@ -176,4 +187,4 @@ task check_2_q(input logic [15:0] data_out,logic [15:0] data_exp);
 endtask 
 
 
-endmodule 
+endmodule
