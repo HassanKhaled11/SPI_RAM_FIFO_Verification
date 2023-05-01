@@ -3,8 +3,8 @@
 module spi_wrapper_tb();
 
 bit MOSI,clk,rst_n,SS_n;
-bit MISO;
-bit MISO_expected;
+bit MISO, MISO_ex;
+
 
 
 
@@ -27,7 +27,7 @@ spi_wrapper  spi_wr_dut(MISO,MOSI,SS_n,clk,rst_n);
 .top_MISO(MISO_expected) 
 );*/
 
-topModule t_dut(clk,rst_n,SS_n,MOSI,MISO_expected);
+//topModule t_dut(clk,rst_n,SS_n,MOSI,MISO_expected);
 
 
 bind spi_wrapper spi_wrapper_sva sw_sva_dut(MISO,MOSI,SS_n,clk,rst_n);
@@ -63,6 +63,7 @@ end
 
 if(data_to_write[i][10:8] == 3'b110)begin
 data_expected = data_to_read[data_to_write[i][7:0]];
+
 end
 
 
@@ -74,17 +75,34 @@ SS_n = 0;
     MOSI = data_to_write[i][j];
   end
 
-#4;
 if(data_to_write[i][10:8] == 3'b111)
+foreach(data_expected[x]) begin
+@(negedge clk);
+  MISO_ex=data_expected[x];
+end
 
-repeat(10)@(negedge clk);
 SS_n = 1;
 #4;
 @(negedge clk);
 end
+
 $stop;
 end
+ always @(negedge clk) begin 
+  assert(sw_obj.randomize());
+  rst_n= sw_obj.rst_n;
 
+ end
+always @(posedge  clk)begin
+  sw_obj.cg.sample();
+end
+sequence seq_read_data;
+ $fell(SS_n)##1 MOSI [*3]; 
+endsequence
+property miso_prop;
+@ (posedge clk) seq_read_data |=> ##7 (MISO==MISO_ex)[*8];
+endproperty
 
-
+assert property(miso_prop);
+cover property(miso_prop);
 endmodule
