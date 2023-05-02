@@ -7,6 +7,7 @@ sequence seq_read_data;
  $fell(SS_n)##1 MOSI [*3]; 
 endsequence
 
+//--------------------------------------------------
 property rst_prop;
 @(posedge clk) ($fell(rst_n) || $rose(SS_n)) |-> !MISO;
 endproperty
@@ -14,7 +15,7 @@ endproperty
 assert property(rst_prop);
 cover property (rst_prop);
 
-
+//--------------------------------------------------
 
 property ssn_prop;
 @(posedge clk) seq_read_data |=> !SS_n[*15] ##1 $rose(SS_n);
@@ -22,10 +23,6 @@ endproperty
 
 assert property(ssn_prop);
 cover property(ssn_prop);
-
-
-
-
 
 
 

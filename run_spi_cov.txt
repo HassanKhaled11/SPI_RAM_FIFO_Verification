@@ -1,0 +1,1 @@
+vcover report spi_wrapper_tb.ucdb -details -annotate -all

@@ -1,0 +1,20 @@
+vlib work
+
+vlog spi_wrapper3.vp  spi_wrapper_tb.sv  spi_wrapper_AS.sv  spi_wrapper_C.sv +cover -covercells
+
+vsim -voptargs=+acc work.spi_wrapper_tb -cover
+
+add wave *
+
+add wave -position insertpoint  \
+sim:/spi_wrapper_tb/data_expected
+
+
+add wave /spi_wrapper_tb/assert__miso_prop /spi_wrapper_tb/spi_wr_dut/sw_sva_dut/assert__rst_prop /spi_wrapper_tb/spi_wr_dut/sw_sva_dut/assert__ssn_prop
+
+
+add wave /spi_wrapper_tb/cover__miso_prop /spi_wrapper_tb/spi_wr_dut/sw_sva_dut/cover__ssn_prop /spi_wrapper_tb/spi_wr_dut/sw_sva_dut/cover__rst_prop
+
+coverage save  spi_wrapper_tb.ucdb -onexit
+
+run -all
