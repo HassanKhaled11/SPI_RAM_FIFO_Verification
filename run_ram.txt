@@ -1,0 +1,20 @@
+vlib work
+
+vlog  ram3.vp  ram3_tb.sv  RAM3_C.sv  RAM3_AS.sv  +cover -covercells
+
+vsim -voptargs=+acc work.spi_ram_tb -cover
+
+add wave *
+
+add wave /spi_ram_tb/assert__add_in_range /spi_ram_tb/ram_dut/ram_sva_instance/assert__tx_assertion /spi_ram_tb/ram_dut/ram_sva_instance/assert__tx_deassertion /spi_ram_tb/ram_dut/ram_sva_instance/assert__write_op /spi_ram_tb/ram_dut/ram_sva_instance/assert__read_op /spi_ram_tb/ram_dut/ram_sva_instance/rst_out /spi_ram_tb/#anonblk#109154386#42#4#/#ublk#109154386#42/immed__44
+
+
+add wave /spi_ram_tb/cover__add_in_range /spi_ram_tb/ram_dut/ram_sva_instance/cover__read_op /spi_ram_tb/ram_dut/ram_sva_instance/cover__write_op /spi_ram_tb/ram_dut/ram_sva_instance/cover__tx_deassertion /spi_ram_tb/ram_dut/ram_sva_instance/cover__tx_assertion /spi_ram_tb/ram_dut/ram_sva_instance/rst_out_cov
+
+add wave -position insertpoint  \
+sim:/spi_ram_tb/memory
+
+
+coverage save  ram3_tb.ucdb -onexit
+
+run -all

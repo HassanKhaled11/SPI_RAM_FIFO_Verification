@@ -5,39 +5,29 @@ input clk,rst_n;
 output reg tx_valid;
 output reg[7:0] dout;
 
-
 `pragma protect begin_protected
 `pragma protect version = 1
-`pragma protect encrypt_agent = "QuestaSim" , encrypt_agent_info = "QA Baseline: 2022_daily_220828 - 5400093"
-`pragma protect key_keyowner = "Siemens" , key_keyname = "SIEMENS-VERIF-SIM-RSA-1"
-`pragma protect key_method = "rsa"
-`pragma protect encoding = ( enctype = "base64" , line_length = 64 , bytes = 256 )
-`pragma protect key_block
-DcXluXs28npAdl6oEUQsyv1a3loGJuT2O0QmebK/naWQOkJrB6lhqRRRym275jI0
-/HLryn95WOAyHFVoXC35C9PPvOkBB6WaaUoRcWCMrv39XOh72nP7KptL5HLnw4UE
-a1gil3+0gj5lH5/1gBFxiAamSeCm3nhYtS0bRdoihQB5qn3UXFcu1l/jVS5yZsRu
-Qfq23khBWpyZAsev+e4iuaRTptJRRR6aLtPFN/mCJoJV+Ha7EO/QAI86SsEyN5nq
-NtfmyF4C2t4qXlXkw5YkXQEX5WQep+S6u0xmpDDqtAWIWfZOsSZp4bWn7xH0j41I
-9n2+o2v5W5HONp2bFnk+uw==
+`pragma protect encrypt_agent = "Model Technology", encrypt_agent_info = "10.2c"
 `pragma protect data_method = "aes128-cbc"
-`pragma protect encoding = ( enctype = "base64" , line_length = 64 , bytes = 528 )
-`pragma protect data_block
-B7oWRnuw7cc5kfJDO3xhRKG7RYce7NzQzmF8y3DRM4E7moKaNhbHM/q+a8YNE/aH
-njL6mnJoZboMBBPzZonBGttQRR8pLLahd3vuvBJ7TYaE+hcbZ2A2FOjoCmDS7N3l
-YMvpHKJGNS4oBhiLc91FfTLx2ULcxGdDwNgxuVzN4bWKGAdposkYiw8JkY7KYX+q
-Oit8VXE5yeuHg74Z4SSDymscVJ+GrJpUY6KWgfu7TE0G4WYPtbtMuCbDD1MtXbjN
-o/cr3RbK8YpTH6bTUp4pHM7chsxi0b1TIQfoLxg2OBzbJAAT6jlowuUyMwUxQwmt
-oWYag0fCVwVjlwSF6xkICvqFUF11RVXWpOcxmPE2zk+qgn5MoqlOhV7+m/eXFFz4
-+zwGega66Q5CXVP11ZTLQZ+enpZb8owF/4eozKWlhLNCG+vass06V1Pm6FSmIHRW
-C/LLcsjgNfs3UZMOqGGSno9QhbOKcCFFNrn+O4M/L6tq+4+kimJTuUeRmvkMLLav
-rf9fZfnOBkbuIgbbTD5i/CXen4mDQKY8uG3vNyrvZHbjiYHs8358lPx6bjUXSHcy
-EzCNWO6a7fGzbOPoXmpEhtuwo9OzJ06rQCuQy9hboHII2Cjawqp+0u+PogglfXdw
-TDldy8T1235LyCGrF8fX152+03yQFFKDsc/BbHilhME4dw0XPrQpfXqDv50xzXdn
+`pragma protect key_keyowner = "Mentor Graphics Corporation" , key_keyname = "MGC-VERIF-SIM-RSA-1" , key_method = "rsa"
+`pragma protect encoding = (enctype = "base64", line_length = 64, bytes = 128), key_block
+n3jAlkNHGt2Ezpli9nBqlQBtzaMDIUrw2u8dYqpg6oMtGrLFDW/RWDHVVeZS3X6H
+Wyg4s4tZj1P5I/8z24xvRhunRnv77CfAhQC7k9I33n5OPoH3qc3hDJ/ogze+NBSY
+DeEMCkhOgyxFuQtDPc7zNMTubzKTmzWqmNQeDbSi0B4=
+`pragma protect encoding = (enctype = "base64", line_length = 64, bytes = 560), data_block
+JPpM5JIHKGWR9hBA3GY2cTkpTecJb3UnBG6hrbm3ooch9A66cvhDDCv1rZfAyA+a
+hGzSLuGV2+QauIlq+YGlCLtYF8NyLYl8oWOnucNxaPPjjcvAonryKvxlJqxKnrdZ
+E8kcoicrQmXM+RbNAFh0ZR9wYqZki6hydR2c7FUSkm9KdjgRfodhs2Q7REy28IdH
+Eoq7xH7n2DICyPXzYxn7/AL1Hths2PmeGDd9p/ANwlZ14Tp2eEOrDmmcIJ0Tf+ly
+mzViJO+ZD1nnIyNg6SKlYEJTuKwJ/edz9rAlzFHxNZ/miGaePfRVbCMWMVYyYL1V
+mP30HR/QXrQMJFgGAvbeVFT9TyGtjdX9izDIAWhckg+6QP3Oujd6+Iay+LXRLb5u
+IKuayq1/ex51oNgG7I7jJyZY4feCMXZJg32MJpSawtPq9xKXlAvV9VqmCKnbb3O4
+qZZbAq0EibuexD4uv4dJPAPuVFL2d3g4Z1HkfkX1JVnX4nMhL5yzU71cjy2Pfdhb
+AUBjMv6mBiA4wEAgow0nvVNkylVeYTy8nFr65CLt3zmXfxa8F4FQfHaSpKl1d3TU
+NYwyDZMv4FtVT6JdNTNOwEQP+xT3y5swWpC+voFYq4Tf+akQCRQu6sNP+nCk92Ea
+xMZT4W1b8atYMTb1jvoJbxIvBlygQFKLUmVA1EWfI7CieGakCFlXI7Ui7sQ8VRbx
+NsGP68xZtW3BzKTr4x30vDtAz6XcDmiwmkyxwwKZLGI=
 `pragma protect end_protected
-
-
-endmodule
-
 
 
 
